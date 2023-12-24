@@ -57,7 +57,7 @@ class Products(models.Model):
     discount_percentage = models.DecimalField(
         max_digits=5, decimal_places=2, null=True, blank=True
     )
-    brand = models.OneToOneField(Brand, on_delete=models.CASCADE, null=True, blank=True)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to=product_image_upload_path)
     sale_price = models.DecimalField(
         max_digits=8, decimal_places=2, null=True, blank=True
