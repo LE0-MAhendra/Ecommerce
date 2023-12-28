@@ -13,7 +13,7 @@ interface Props {
 }
 const page = ({ params: { uid, token } }: Props) => {
   return (
-    <div className="flex justify-center items-center overflow-y-hidden h-screen bg-[url('/background.jpg')] bg-cover">
+    <div className="flex justify-center items-center overflow-y-hidden h-screen">
       <PasswordResetConfirmPage uid={uid} token={token} />
     </div>
   );
