@@ -22,6 +22,7 @@ import { setFildata, setProducts } from "@/redux/features/Items/productSlice";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Spinner from "@/components/Spinner";
 const FormSchema = z.object({
   brands: z.array(z.string()),
   categories: z.array(z.string()),
@@ -109,7 +110,7 @@ export function CustomToggle({
                 <FormLabel className="text-base font-bold">Brands</FormLabel>
               </div>
               <div>
-                {Brands ? (
+                {Array.isArray(Brands) && Brands.length !== 0 ? (
                   <ScrollArea className="h-[130px] w-full rounded-md bg-white p-2">
                     <div>
                       {Brands.map((brand: BrandProps) => (
@@ -139,7 +140,7 @@ export function CustomToggle({
                     </div>
                   </ScrollArea>
                 ) : (
-                  <p>Loading</p>
+                  <Spinner />
                 )}
               </div>
               <FormMessage />
@@ -156,7 +157,7 @@ export function CustomToggle({
                   Categories
                 </FormLabel>
               </div>
-              {Categories ? (
+              {Array.isArray(Categories) && Categories.length !== 0 ? (
                 <ScrollArea className="h-[130px] w-full rounded-md bg-white p-2">
                   <div className="">
                     {Categories.map((cat: CategoryProps) => (
@@ -186,7 +187,7 @@ export function CustomToggle({
                   </div>
                 </ScrollArea>
               ) : (
-                <p>Loading</p>
+                <Spinner />
               )}
               <FormMessage />
             </FormItem>

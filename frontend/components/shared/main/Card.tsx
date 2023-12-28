@@ -36,21 +36,24 @@ const Card = () => {
       console.error("Error resetting products:", error);
     }
   };
-  const filteredProducts = productData.filter((data) => {
-    if (typeof data.name === "string") {
-      const productNameWithoutSpaces = data.name
-        .replace(/\s/g, "")
-        .toLowerCase();
-      const searchDataWithoutSpaces = searchData
-        .replace(/\s/g, "")
-        .toLowerCase();
+  const filteredProducts =
+    Array.isArray(productData) && productData.length > 0
+      ? productData.filter((data) => {
+          if (typeof data.name === "string") {
+            const productNameWithoutSpaces = data.name
+              .replace(/\s/g, "")
+              .toLowerCase();
+            const searchDataWithoutSpaces = searchData
+              .replace(/\s/g, "")
+              .toLowerCase();
 
-      return productNameWithoutSpaces.includes(searchDataWithoutSpaces);
-    } else {
-      toast("Select valid options");
-      return false; // or handle the case in a way that fits your logic
-    }
-  });
+            return productNameWithoutSpaces.includes(searchDataWithoutSpaces);
+          } else {
+            toast("Select valid options");
+            return false; // or handle the case in a way that fits your logic
+          }
+        })
+      : [];
 
   return (
     <>

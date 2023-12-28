@@ -14,10 +14,10 @@ const LeftSec = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const brandResponse = await API.get(`/products/allbrands`);
+        const brandResponse = await API.get(`/products/allbrands/`);
         dispatch(setBrands(brandResponse.data));
 
-        const categoryResponse = await API.get(`/products/categories`);
+        const categoryResponse = await API.get(`/products/categories/`);
         dispatch(setCategories(categoryResponse.data));
       } catch (error) {
         console.error("Error Fetching Data:", error);

@@ -46,13 +46,10 @@ const AddBuyCart = ({ productId }: props) => {
       {/* <RequireAuth> */}
       <div className="flex gap-4 p-2">
         <Button
-          className="bg-red-400 text-white hover:bg-red-500"
+          className="bg-green-400 text-gray-600 hover:bg-green-500 text-xl"
           onClick={() => handleAddCart(productId)}
         >
           Add to cart
-        </Button>
-        <Button className="bg-green-400 text-white hover:bg-green-500">
-          Buy Now
         </Button>
       </div>
       {/* </RequireAuth> */}
