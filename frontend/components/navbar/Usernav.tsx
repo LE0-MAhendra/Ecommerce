@@ -2,28 +2,22 @@
 import { navitems } from "@/constants/constants";
 import Link from "next/link";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { useLogoutMutation } from "@/redux/features/Auth/authApiSlice";
-import { logout as setLogout } from "@/redux/features/Auth/authSlice";
+import { logout as setLogout, setUser } from "@/redux/features/Auth/authSlice";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
 import { NumProd } from "@/redux/features/Carts/cartSlice";
+import { useUserData } from "../hooks/useUserData";
 const Usernav = () => {
   const router = useRouter();
   const numprod = useSelector(NumProd);
+  // const userData = useUserData();
   const dispatch = useAppDispatch();
-  const [logout] = useLogoutMutation();
   const { isAuthenticated, loggeduser } = useAppSelector((state) => state.auth);
   const handleLogout = () => {
-    logout(undefined)
-      .unwrap()
-      .then(() => {
-        dispatch(setLogout());
-      })
-      .finally(() => {
-        router.push("/");
-      });
+    dispatch(setLogout());
+    router.push("/");
   };
   return (
     <div className="flex gap-3 items-center justify-center">

@@ -31,17 +31,18 @@ const cartSlice = createSlice({
       );
       state.totalProducts = state.AllCartItems.length;
     },
+    setCartLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
     DeleteAll: (state) => {
       return initialState;
-    },
-    finishedLoading: (state) => {
-      state.isLoading = false;
     },
   },
 });
 
-export const { addProduct, DeleteAll, DelProd, finishedLoading } =
+export const { addProduct, setCartLoading, DeleteAll, DelProd } =
   cartSlice.actions;
 export const TotalProdCart = (state: RootState) => state.cart.AllCartItems;
 export const NumProd = (state: RootState) => state.cart.totalProducts;
 export default cartSlice.reducer;
+export const cartLoading = (state: RootState) => state.cart.isLoading;

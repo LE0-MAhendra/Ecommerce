@@ -1,5 +1,5 @@
 import { RootState } from "@/redux/store";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export interface LoggedUser {
   id: string;
   first_name: string;
@@ -37,6 +37,7 @@ if (storedAccessToken !== null && storedRefreshToken !== null) {
   initialState.refreshToken = storedRefreshToken;
   initialState.isAuthenticated = true;
 }
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -54,15 +55,16 @@ const authSlice = createSlice({
       state.loggeduser = null;
       state.accessToken = null;
       state.refreshToken = null;
-
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
     },
-    finishInitialLoad: (state) => {
-      state.isLoading = false;
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
     setUser: (state, action) => {
-      state.loggeduser = action.payload;
+      state.loggeduser = null;
+      const user = action.payload;
+      state.loggeduser = user;
     },
     Glogin: (state, action) => {
       const { gstate, refresh, access } = action.payload;
@@ -76,9 +78,10 @@ const authSlice = createSlice({
     },
   },
 });
-export const { setAuth, logout, finishInitialLoad, setUser, Glogin } =
+export const { setAuth, logout, setLoading, setUser, Glogin } =
   authSlice.actions;
 export const UserAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 export const myToken = (state: RootState) => state.auth.accessToken;
 export default authSlice.reducer;
+export const loadingState = (state: RootState) => state.auth.isLoading;

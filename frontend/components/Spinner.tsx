@@ -1,10 +1,17 @@
 import React from "react";
-
+import { FidgetSpinner } from "react-loader-spinner";
 const Spinner = () => {
   return (
-    <button type="button" className="w-full" disabled>
-      <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
-    </button>
+    <section className="h-[90vh] w-full flex justify-center items-center z-30 bg-none">
+      <FidgetSpinner
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="fidget-spinner-loading"
+        wrapperStyle={{}}
+        wrapperClass="fidget-spinner-wrapper"
+      />
+    </section>
   );
 };
 

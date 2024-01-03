@@ -17,11 +17,13 @@ const brandSlice = createSlice({
     setSelectedBrand: (state, action) => {
       state.selectedProduct = action.payload;
     },
-    setLoading: (state, action) => {
+    setBrandLoading: (state, action) => {
       state.isLoading = action.payload;
     },
   },
 });
-export const { setBrands, setSelectedBrand, setLoading } = brandSlice.actions;
+export const { setBrands, setSelectedBrand, setBrandLoading } =
+  brandSlice.actions;
 export const selBrands = (state: RootState) => state.brands.AllBrands;
 export default brandSlice.reducer;
+export const brandLoading = (state: RootState) => state.brands.isLoading;

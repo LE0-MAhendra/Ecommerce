@@ -6,10 +6,12 @@ import type {
 } from "@reduxjs/toolkit/query";
 import { setAuth, logout } from "../features/Auth/authSlice";
 import { Mutex } from "async-mutex";
+import { MyBaseURl } from "@/constants/constants";
 
 const mutex = new Mutex();
+// const refresh = localStorage.getItem("refresh");
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api`,
+  baseUrl: `${MyBaseURl}/api`,
   credentials: "include",
 });
 const baseQueryWithReauth: BaseQueryFn<
@@ -19,7 +21,7 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
-
+  const refresh = localStorage.getItem("refresh");
   if (result.error && result.error.status === 401) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
@@ -28,6 +30,7 @@ const baseQueryWithReauth: BaseQueryFn<
           {
             url: "/jwt/refresh/",
             method: "POST",
+            body: { refresh: refresh },
           },
           api,
           extraOptions

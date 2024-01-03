@@ -16,7 +16,6 @@ import Link from "next/link";
 import { useLoginMutation } from "@/redux/features/Auth/authApiSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import Spinner from "@/components/Spinner";
 import { setAuth, setUser } from "@/redux/features/Auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { continueWithGoogle } from "@/utils";
@@ -31,17 +30,19 @@ export function LoginForm() {
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
-  const userData = useUserData();
   const form = useForm<z.infer<typeof loginformSchema>>({
     resolver: zodResolver(loginformSchema),
   });
   const Submit = async (values: z.infer<typeof loginformSchema>) => {
     try {
       const response = await login(values).unwrap();
-      const { access, refresh } = response;
-      dispatch(setAuth({ access, refresh }));
+      const MyToken = JSON.stringify(response);
+      const { refresh, access } = response;
+      dispatch(setAuth({ refresh, access, MyToken }));
       toast.success("Login Success");
-      await Getdata();
+      if (access) {
+        await Getdata(access);
+      }
       router.push("/");
     } catch (error) {
       console.error("Failed to login or retrieve user data", error);
@@ -49,9 +50,10 @@ export function LoginForm() {
       return;
     }
   };
-  const Getdata = async () => {
+  const Getdata = async (access: any) => {
     try {
-      dispatch(setUser(userData));
+      const user = await useUserData(access);
+      dispatch(setUser(user));
     } catch (error) {
       console.error("Failed to retrieve user data", error);
       // Handle the error accordingly
@@ -109,7 +111,7 @@ export function LoginForm() {
           </p>
           <div className="flex flex-col justify-center text-center w-full gap-2">
             <Button type="submit" className="mt-4">
-              {isLoading ? <Spinner /> : "Log in"}
+              {isLoading ? "Buckle Up..." : "Log in"}
             </Button>
             {/* <span className="space-y-4">Or</span>
             <Link href="/google">

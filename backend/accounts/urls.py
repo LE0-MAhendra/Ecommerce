@@ -1,19 +1,12 @@
-from django.urls import path, re_path
-from .views import (
-    CustomProviderAuthView,
-    CustomTokenObtainPairView,
-    CustomTokenRefreshView,
-    CustomTokenVerifyView,
-    LogoutView,
+from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
 )
+
 urlpatterns = [
-    re_path(
-        r"^o/(?P<provider>\S+)/$",
-        CustomProviderAuthView.as_view(),
-        name="provider-auth",
-    ),
-    path("jwt/create/", CustomTokenObtainPairView.as_view()),
-    path("jwt/refresh/", CustomTokenRefreshView.as_view()),
-    path("jwt/verify/", CustomTokenVerifyView.as_view()),
-    path("logout/", LogoutView.as_view()),
+    path("jwt/create/", TokenObtainPairView.as_view()),
+    path("jwt/refresh/", TokenRefreshView.as_view()),
+    path("jwt/verify/", TokenVerifyView.as_view()),
 ]

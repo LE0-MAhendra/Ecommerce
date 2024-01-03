@@ -10,12 +10,12 @@ import {
   selSearch,
   selfilSize,
   setFildata,
-  setLoading,
   setProducts,
 } from "@/redux/features/Items/productSlice";
 import { Button } from "../../ui/button";
 import SearchBar from "../../search/SearchBar";
 import { toast } from "react-toastify";
+import { setLoading } from "@/redux/features/Auth/authSlice";
 const Card = () => {
   const API = useApi();
   const dispatch = useDispatch();
@@ -26,14 +26,16 @@ const Card = () => {
   const handleReset = async () => {
     try {
       // Call the asynchronous function and wait for it to complete
+      dispatch(setLoading(true));
       const res = await API.get("/products/");
       dispatch(setProducts(res.data));
       dispatch(setFildata(0));
       dispatch(SearchProd(""));
-      dispatch(setLoading(false));
     } catch (error) {
       // Handle errors if needed
       console.error("Error resetting products:", error);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   const filteredProducts =

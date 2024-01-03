@@ -22,7 +22,7 @@ const productSlice = createSlice({
     setSelectedProduct: (state, action) => {
       state.selectedProduct = action.payload;
     },
-    setLoading: (state, action) => {
+    setProdLoading: (state, action) => {
       state.isLoading = action.payload;
     },
     setFildata: (state, action) => {
@@ -39,7 +39,7 @@ const productSlice = createSlice({
 export const {
   setProducts,
   setSelectedProduct,
-  setLoading,
+  setProdLoading,
   ResetProd,
   setFildata,
   SearchProd,
@@ -49,3 +49,4 @@ export const selSize = (state: RootState) => state.products.productsize;
 export const selfilSize = (state: RootState) => state.products.filProdSize;
 export default productSlice.reducer;
 export const selSearch = (state: RootState) => state.products.searchText;
+export const prodLoading = (state: RootState) => state.products.isLoading;

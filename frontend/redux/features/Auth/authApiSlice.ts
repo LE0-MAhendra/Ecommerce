@@ -16,9 +16,6 @@ interface CreateUserResponse {
 }
 const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    retrieveUser: builder.query<User, void>({
-      query: () => "/users/me/",
-    }),
     socialAuthenticate: builder.mutation<CreateUserResponse, SocialAuthArgs>({
       query: ({ provider, state, code }) => ({
         url: `/o/${provider}/?state=${encodeURIComponent(
@@ -51,12 +48,7 @@ const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
-    logout: builder.mutation({
-      query: () => ({
-        url: "/logout/",
-        method: "POST",
-      }),
-    }),
+
     activation: builder.mutation({
       query: ({ uid, token }) => ({
         url: "/users/activation/",
@@ -82,12 +74,10 @@ const authApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useRetrieveUserQuery,
   useSocialAuthenticateMutation,
   useLoginMutation,
   useRegisterMutation,
   useVerifyMutation,
-  useLogoutMutation,
   useActivationMutation,
   useResetPasswordMutation,
   useResetPasswordConfirmMutation,

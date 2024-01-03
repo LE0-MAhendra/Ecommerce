@@ -1,4 +1,3 @@
-import { useApi } from "@/redux/services/axios";
 import { ProductsProps } from "@/types/types";
 import { RootState } from "@/redux/store";
 import React from "react";
@@ -7,8 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { SendToBack } from "lucide-react";
 import AddBuyCart from "../../cartSec/AddBuyCart";
+import Spinner from "@/components/Spinner";
 const ProductPage = () => {
-  const API = useApi();
   const productData = useSelector(
     (state: RootState) => state.products.selectedProduct
   );
@@ -74,7 +73,7 @@ const ProductPage = () => {
           </div>
         </>
       ) : (
-        <p>Loading...</p>
+        <Spinner />
       )}
     </div>
   );

@@ -39,7 +39,6 @@ const CheckoutBtn = ({ id }: any) => {
     }
 
     const orderData = await API.post(`/items/createOrder/${id}/`);
-    console.log(orderData);
 
     const { amount, currency, order_id } = orderData.data;
 

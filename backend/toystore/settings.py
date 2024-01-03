@@ -24,7 +24,8 @@ SECRET_KEY = getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+# ALLOWED_HOSTS = getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = "accounts.User"
 # Application definition
@@ -137,6 +138,7 @@ USE_TZ = True
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "accounts.authentication.CustomJWTAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
@@ -170,9 +172,11 @@ DJOSER = {
     "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": getenv("REDIRECT_URLS").split(","),
 }
 SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("JWT",),
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=12),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
 # Email service
 EMAIL_BACKEND = "django_ses.SESBackend"
@@ -189,7 +193,7 @@ SITE_NAME = "Store"
 
 # Auth token refresh
 AUTH_COOKIE = "access"
-AUTH_COOKIE_ACCESS_MAX_AGE = datetime.timedelta(hours=12)
+AUTH_COOKIE_ACCESS_MAX_AGE = datetime.timedelta(hours=1)
 AUTH_COOKIE_REFRESH_MAX_AGE = datetime.timedelta(days=7)
 AUTH_COOKIE_SECURE = True
 AUTH_COOKIE_HTTP_ONLY = True
