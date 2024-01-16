@@ -5,11 +5,13 @@ import { CustomToggle } from "./Custom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   brandLoading,
+  selBrands,
   setBrandLoading,
   setBrands,
 } from "@/redux/features/Items/BrandSlice";
 import {
   catLoading,
+  selCategories,
   setCatLoading,
   setCategories,
 } from "@/redux/features/Items/categorySlice";
@@ -21,15 +23,20 @@ const LeftSec = () => {
   const dispatch = useDispatch();
   const IsBRLoading = useSelector(brandLoading);
   const IscatLoading = useSelector(catLoading);
+  const Brands = useSelector(selBrands);
+  const Categories = useSelector(selCategories);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const brandResponse = await API.get(`/products/allbrands/`);
-        dispatch(setBrands(brandResponse.data));
-
-        const categoryResponse = await API.get(`/products/categories/`);
-        dispatch(setCategories(categoryResponse.data));
+        if (Brands.length < 1) {
+          const brandResponse = await API.get(`/products/allbrands/`);
+          dispatch(setBrands(brandResponse.data));
+        }
+        if (Categories.length < 1) {
+          const categoryResponse = await API.get(`/products/categories/`);
+          dispatch(setCategories(categoryResponse.data));
+        }
       } catch (error) {
         console.error("Error Fetching Data:", error);
       } finally {

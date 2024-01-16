@@ -1,3 +1,4 @@
+import { MyRedirectUri } from "@/constants/constants";
 import { toast } from "react-toastify";
 
 export default async function continueWithSocialAuth(
@@ -5,9 +6,7 @@ export default async function continueWithSocialAuth(
   redirect: string
 ) {
   try {
-    const url = `${
-      process.env.NEXT_PUBLIC_HOST
-    }/api/o/${provider}/?redirect_uri=${
+    const url = `${MyRedirectUri}/api/o/${provider}/?redirect_uri=${
       process.env.NODE_ENV === "production"
         ? process.env.NEXT_PUBLIC_REDIRECT_URL
         : "http://localhost:3000"

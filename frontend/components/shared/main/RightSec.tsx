@@ -4,6 +4,7 @@ import { useApi } from "@/redux/services/axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   prodLoading,
+  selProducts,
   setProdLoading,
   setProducts,
 } from "@/redux/features/Items/productSlice";
@@ -12,17 +13,20 @@ import Spinner from "@/components/Spinner";
 const RightSec = () => {
   const API = useApi();
   const IsLoading = useSelector(prodLoading);
+  const productData = useSelector(selProducts);
   const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
       try {
-        await API.get("/products/")
-          .then((response) => {
-            dispatch(setProducts(response.data));
-          })
-          .catch((error) => {
-            console.error("Error Fetching Products:", error);
-          });
+        if (productData.length < 1) {
+          await API.get("/products/")
+            .then((response) => {
+              dispatch(setProducts(response.data));
+            })
+            .catch((error) => {
+              console.error("Error Fetching Products:", error);
+            });
+        }
       } catch (error) {
         console.error(error);
       } finally {

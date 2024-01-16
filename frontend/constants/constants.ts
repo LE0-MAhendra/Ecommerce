@@ -1,6 +1,8 @@
 require("dotenv").config({ path: "../.env.local" });
 export const MyBaseURl =
   process.env.NEXT_PUBLIC_HOST || "http://127.0.0.1:8000/store";
+export const MyRedirectUri =
+  process.env.NEXT_PUBLIC_REDIRECT_URL || "http://localhost";
 export const navitems = [
   {
     title: "Store",
