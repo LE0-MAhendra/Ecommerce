@@ -1,4 +1,3 @@
----
 
 # Web Application E-commerce Store
 
@@ -79,5 +78,3 @@ Once the containers are up or the Django and Next.js servers are running, you ca
 - Next.js Frontend: [http://localhost:3000](http://localhost:3000)
 
 Feel free to explore the project and start shopping on your brand new E-commerce platform! If you encounter any issues, have suggestions, or just want to say hi, please open an issue or send a message. Happy coding! 🚀🌐💻
-
----
