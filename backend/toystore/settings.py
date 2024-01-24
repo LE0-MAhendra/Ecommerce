@@ -11,7 +11,7 @@ from django.core.management.utils import get_random_secret_key
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # dotenv_file = BASE_DIR / ".env.local"
-dotenv_file = "../.env.local"
+dotenv_file = "../.env"
 if path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 DEVELOPMENT_MODE = getenv("DEVELOPMENT_MODE", "False") == "True"

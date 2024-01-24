@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../.env.local" });
+require("dotenv").config({ path: "../../.env" });
 export const MyBaseURl =
   process.env.NEXT_PUBLIC_HOST || "http://127.0.0.1:8000/store";
 export const MyRedirectUri =
