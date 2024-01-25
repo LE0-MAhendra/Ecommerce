@@ -20,8 +20,9 @@ def get_full_image_url(relative_path):
 def get_products(request):
     brand_param = request.query_params.get("brand", None)
     category_param = request.query_params.get("category", None)
+    data = Products.objects.filter(is_available=True).order_by("-updated_at")
     if not brand_param and not category_param:
-        data = Products.objects.all()
+        data = data
     elif brand_param or category_param:
         # Create a dictionary to store filter conditions
         filters = []
@@ -50,10 +51,8 @@ def get_products(request):
         else:
             for filter_condition in filters:
                 combined_filter |= filter_condition
-
-        # Apply filters to the queryset
-        data = Products.objects.filter(combined_filter).distinct()
-
+        if combined_filter:
+            data = data.filter(combined_filter).distinct()
     if not data:
         return Response({"message": f"No Products are added"})
     serializer = ProductSerializer(data, many=True)

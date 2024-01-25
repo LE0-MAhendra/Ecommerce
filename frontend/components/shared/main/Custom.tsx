@@ -82,9 +82,7 @@ export function CustomToggle({
             brands: [],
             categories: [],
           });
-          toast.error(
-            "No products present for this selection. Please make a valid filters."
-          );
+          toast.error("Products with the selection is not available");
         }
         endpoint = "/products";
       } catch (error) {

@@ -11,7 +11,7 @@ RUN npm install -g pnpm && \
 
 # Copy the rest of the application
 COPY . .
-
+RUN ls -la
 # Build the application
 RUN pnpm run build
 
@@ -24,7 +24,6 @@ COPY --from=builder /frontend/package.json .
 COPY --from=builder /frontend/pnpm-lock.yaml .
 COPY --from=builder /frontend/next.config.js ./
 COPY --from=builder /frontend/public ./public
-COPY --from=builder /frontend/.next/standalone ./
 COPY --from=builder /frontend/.next/static ./.next/static
 
 # Install pnpm and next globally in the runner stage
